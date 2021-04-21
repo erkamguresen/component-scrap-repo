@@ -52,6 +52,43 @@ function getLineTokens(textToTokenize) {
 // delimiters from java \t\n\r\f
 function getWordTokens(textLineToTokenize) {
   //get from front (shift) add to back (push)
+  let returnArray = [];
+  let word = "";
+  //get from front (shift) add to back (push)
+
+  let length = textLineToTokenize.length;
+
+  for (let i = 0; i < textLineToTokenize.length; i++) {
+    let char = textLineToTokenize[i];
+
+    if (i === textLineToTokenize.length - 1) {
+      word += char;
+      returnArray.push(word);
+      break;
+    }
+
+    if (char !== "\n") {
+      word += char;
+
+      continue;
+    }
+
+    //should not contain \n
+    if (
+      char === "\n" ||
+      char === "\t" ||
+      char === " " ||
+      char === "\r" ||
+      char === "\f"
+    ) {
+      if (word !== " ") returnArray.push(word);
+
+      word = "";
+      continue;
+    }
+  }
+
+  return returnArray;
 }
 
 function areArraysEqual(a, b) {
@@ -106,10 +143,32 @@ let textLines = [
   "Animi doloribus quisquam recusandae!",
 ];
 
-let lineTokens = getLineTokens(text);
+let text2 = `Lorem ipsum dolor, 
+sit amet consectetur adipisicing elit.[] 
+Libero voluptatibus neque repellat rerum perspiciatis sunt tempore, {} 
+iste soluta quae temporibus aspernatur accusantium perferendis ipsa accusamus <>
+voluptatem adipisci commodi assumenda ab dolorem cumque vitae, quia reprehenderit repudiandae. /?;:'\|
+Animi doloribus quisquam recusandae!`;
+
+let textLines2 = [
+  "Lorem ipsum dolor, ",
+  "sit amet consectetur adipisicing elit.[] ",
+  "Libero voluptatibus neque repellat rerum perspiciatis sunt tempore, {} ",
+  "iste soluta quae temporibus aspernatur accusantium perferendis ipsa accusamus <>",
+  "voluptatem adipisci commodi assumenda ab dolorem cumque vitae, quia reprehenderit repudiandae. /?;:'|",
+  "Animi doloribus quisquam recusandae!",
+];
 
 (function tests() {
+  let lineTokens = getLineTokens(text);
+  let lineTokens2 = getLineTokens(text2);
+
   // console.log(textLines);
   let isTestPassed = areArraysEqual(textLines, lineTokens);
   console.assert(isTestPassed, "Line Tests Filed");
+
+  isTestPassed = areArraysEqual(textLines2, lineTokens2);
+  console.assert(isTestPassed, "Line Tests Filed");
+
+  console.log("The End of The Tests");
 })();
