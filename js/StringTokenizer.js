@@ -129,7 +129,7 @@ function areArraysEqual(a, b) {
 
 let text = `Lorem ipsum dolor, 
 sit amet consectetur adipisicing elit. 
-Libero voluptatibus neque repellat rerum perspiciatis sunt tempore, 
+Libero voluptatibus neque repellat 96 rerum perspiciatis sunt tempore, 
 iste soluta quae temporibus aspernatur accusantium perferendis ipsa accusamus 
 voluptatem adipisci commodi assumenda ab dolorem cumque vitae, quia reprehenderit repudiandae. 
 Animi doloribus quisquam recusandae!`;
@@ -137,7 +137,7 @@ Animi doloribus quisquam recusandae!`;
 let textLines = [
   "Lorem ipsum dolor, ",
   "sit amet consectetur adipisicing elit. ",
-  "Libero voluptatibus neque repellat rerum perspiciatis sunt tempore, ",
+  "Libero voluptatibus neque repellat 96 rerum perspiciatis sunt tempore, ",
   "iste soluta quae temporibus aspernatur accusantium perferendis ipsa accusamus ",
   "voluptatem adipisci commodi assumenda ab dolorem cumque vitae, quia reprehenderit repudiandae. ",
   "Animi doloribus quisquam recusandae!",
@@ -146,16 +146,16 @@ let textLines = [
 let text2 = `Lorem ipsum dolor, 
 sit amet consectetur adipisicing elit.[] 
 Libero voluptatibus neque repellat rerum perspiciatis sunt tempore, {} 
-iste soluta quae temporibus aspernatur accusantium perferendis ipsa accusamus <>
-voluptatem adipisci commodi assumenda ab dolorem cumque vitae, quia reprehenderit repudiandae. /?;:'\|
+iste soluta quae temporibus aspernatur accusantium 00 perferendis ipsa accusamus <>
+voluptatem adipisci commodi assumenda ab 60 dolorem cumque vitae, quia reprehenderit repudiandae. /?;:'\|
 Animi doloribus quisquam recusandae!`;
 
 let textLines2 = [
   "Lorem ipsum dolor, ",
   "sit amet consectetur adipisicing elit.[] ",
   "Libero voluptatibus neque repellat rerum perspiciatis sunt tempore, {} ",
-  "iste soluta quae temporibus aspernatur accusantium perferendis ipsa accusamus <>",
-  "voluptatem adipisci commodi assumenda ab dolorem cumque vitae, quia reprehenderit repudiandae. /?;:'|",
+  "iste soluta quae temporibus aspernatur accusantium 00 perferendis ipsa accusamus <>",
+  "voluptatem adipisci commodi assumenda ab 60 dolorem cumque vitae, quia reprehenderit repudiandae. /?;:'|",
   "Animi doloribus quisquam recusandae!",
 ];
 
