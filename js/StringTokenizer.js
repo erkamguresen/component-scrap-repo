@@ -1,16 +1,11 @@
 function stringTokenizer(textToTokenize) {
   let returnArray = [];
 
-  //check empty text or null
   if (textToTokenize === null || textToTokenize === "") return returnArray;
 
-  //token to lines
   returnArray.push(getLineTokens(textToTokenize));
 
-  //token to words
   for (let i = 0; i < returnArray.length; i++) {
-    //get from front (shift) add to back (push)
-    // const element = returnArray.shift();
     returnArray.push(getWordTokens(returnArray.shift()));
   }
 
@@ -20,9 +15,6 @@ function stringTokenizer(textToTokenize) {
 function getLineTokens(textToTokenize) {
   let returnArray = [];
   let line = "";
-  //get from front (shift) add to back (push)
-
-  let length = textToTokenize.length;
 
   for (let i = 0; i < textToTokenize.length; i++) {
     let char = textToTokenize[i];
@@ -35,14 +27,12 @@ function getLineTokens(textToTokenize) {
 
     if (char !== "\n") {
       line += char;
-
       continue;
-    }
-
-    if (char === "\n") {
+    } else {
+      // char === "\n"
       returnArray.push(line);
+
       line = "";
-      continue;
     }
   }
 
@@ -51,37 +41,32 @@ function getLineTokens(textToTokenize) {
 
 // delimiters from java \t\n\r\f
 function getWordTokens(textLineToTokenize) {
-  //get from front (shift) add to back (push)
   let returnArray = [];
   let word = "";
-  //get from front (shift) add to back (push)
-
-  let length = textLineToTokenize.length;
 
   for (let i = 0; i < textLineToTokenize.length; i++) {
     let char = textLineToTokenize[i];
 
     if (i === textLineToTokenize.length - 1) {
-      word += char;
+      if (char !== " " && char !== "" && char !== "\n") word += char;
+
       returnArray.push(word);
+
       break;
     }
 
-    if (char !== "\n") {
+    if (
+      char !== "\n" &&
+      char !== "\t" &&
+      char !== " " &&
+      char !== "\r" &&
+      char !== "\f"
+    ) {
       word += char;
 
       continue;
-    }
-
-    //should not contain \n
-    if (
-      char === "\n" ||
-      char === "\t" ||
-      char === " " ||
-      char === "\r" ||
-      char === "\f"
-    ) {
-      if (word !== " ") returnArray.push(word);
+    } else {
+      if (word !== " " && word !== "" && word !== "\n") returnArray.push(word);
 
       word = "";
       continue;
@@ -102,30 +87,10 @@ function areArraysEqual(a, b) {
   // you might want to clone your array first.
 
   for (var i = 0; i < a.length; ++i) {
-    // let text1 = a[i];
-    // let text2 = b[i];
-    // let truth = a[i].localeCompare(b[i]);
-    // let truht2 = "Lorem ipsum dolor, ".localeCompare("Lorem ipsum dolor, ");
-    // let truth3 = a[i] === b[i];
     if (a[i] !== b[i]) return false;
   }
   return true;
 }
-// let stringVar = "The \nend !!!";
-
-// console.log("The \nend !!!");
-// console.log(stringVar.charCodeAt(4));
-// console.log(stringVar.length);
-
-// for (let i = 0; i < stringVar.length; i++) {
-//   const element = stringVar[i];
-//   console.log(i, element, " ", element.charCodeAt());
-// }
-
-// for (let i=0; i < 200; i++){
-//     let s = String.fromCharCode(i);
-//     console.log(i, s);
-//   }
 
 let text = `Lorem ipsum dolor, 
 sit amet consectetur adipisicing elit. 
@@ -145,30 +110,140 @@ let textLines = [
 
 let text2 = `Lorem ipsum dolor, 
 sit amet consectetur adipisicing elit.[] 
-Libero voluptatibus neque repellat rerum perspiciatis sunt tempore, {} 
+Libero voluptatibus neque repellat rerum\tperspiciatis sunt tempore, {} 
 iste soluta quae temporibus aspernatur accusantium 00 perferendis ipsa accusamus <>
-voluptatem adipisci commodi assumenda ab 60 dolorem cumque vitae, quia reprehenderit repudiandae. /?;:'\|
+voluptatem adipisci commodi assumenda ab 60 dolorem cumque vitae, quia reprehenderit repudiandae. /?;:\|
 Animi doloribus quisquam recusandae!`;
 
 let textLines2 = [
   "Lorem ipsum dolor, ",
   "sit amet consectetur adipisicing elit.[] ",
-  "Libero voluptatibus neque repellat rerum perspiciatis sunt tempore, {} ",
+  "Libero voluptatibus neque repellat rerum\tperspiciatis sunt tempore, {} ",
   "iste soluta quae temporibus aspernatur accusantium 00 perferendis ipsa accusamus <>",
-  "voluptatem adipisci commodi assumenda ab 60 dolorem cumque vitae, quia reprehenderit repudiandae. /?;:'|",
+  "voluptatem adipisci commodi assumenda ab 60 dolorem cumque vitae, quia reprehenderit repudiandae. /?;:|",
   "Animi doloribus quisquam recusandae!",
 ];
 
 (function tests() {
   let lineTokens = getLineTokens(text);
   let lineTokens2 = getLineTokens(text2);
+  //let wordTokens = getWordTokens(text);
 
+  let text1Words = [
+    ["Lorem", "ipsum", "dolor,"],
+    ["sit", "amet", "consectetur", "adipisicing", "elit."],
+    [
+      "Libero",
+      "voluptatibus",
+      "neque",
+      "repellat",
+      "96",
+      "rerum",
+      "perspiciatis",
+      "sunt",
+      "tempore,",
+    ],
+    [
+      "iste",
+      "soluta",
+      "quae",
+      "temporibus",
+      "aspernatur",
+      "accusantium",
+      "perferendis",
+      "ipsa",
+      "accusamus",
+    ],
+    [
+      "voluptatem",
+      "adipisci",
+      "commodi",
+      "assumenda",
+      "ab",
+      "dolorem",
+      "cumque",
+      "vitae,",
+      "quia",
+      "reprehenderit",
+      "repudiandae.",
+    ],
+    ["Animi", "doloribus", "quisquam", "recusandae!"],
+  ];
+
+  let text2Words = [
+    ["Lorem", "ipsum", "dolor,"],
+    ["sit", "amet", "consectetur", "adipisicing", "elit.[]"],
+    [
+      "Libero",
+      "voluptatibus",
+      "neque",
+      "repellat",
+      "rerum",
+      "perspiciatis",
+      "sunt",
+      "tempore,",
+      "{}",
+    ],
+    [
+      "iste",
+      "soluta",
+      "quae",
+      "temporibus",
+      "aspernatur",
+      "accusantium",
+      "00",
+      "perferendis",
+      "ipsa",
+      "accusamus",
+      "<>",
+    ],
+    [
+      "voluptatem",
+      "adipisci",
+      "commodi",
+      "assumenda",
+      "ab",
+      "60",
+      "dolorem",
+      "cumque",
+      "vitae,",
+      "quia",
+      "reprehenderit",
+      "repudiandae.",
+      "/?;:|",
+    ],
+    ["Animi", "doloribus", "quisquam", "recusandae!"],
+  ];
   // console.log(textLines);
   let isTestPassed = areArraysEqual(textLines, lineTokens);
-  console.assert(isTestPassed, "Line Tests Filed");
+  console.assert(isTestPassed, "Line Tests of Text1 Failed");
 
   isTestPassed = areArraysEqual(textLines2, lineTokens2);
-  console.assert(isTestPassed, "Line Tests Filed");
+  console.assert(isTestPassed, "Line Tests of Text2 Failed");
+
+  for (let i = 0; i < lineTokens.length; i++) {
+    const line = lineTokens[i];
+    let wordTokens2 = getWordTokens(line);
+    // let test = line.split(" ");
+
+    console.assert(
+      areArraysEqual(wordTokens2, text1Words[i]),
+      `${i} th Line Test of Text1 Failed`
+    );
+  }
+
+  for (let i = 0; i < lineTokens2.length; i++) {
+    const line = lineTokens2[i];
+    let wordTokens2 = getWordTokens(line);
+    let test = line.split(" ");
+
+    console.assert(
+      areArraysEqual(wordTokens2, text2Words[i]),
+      `${i} th Line Test of Text2 Failed`
+    );
+  }
+
+  //TODO test from text to words; main method
 
   console.log("The End of The Tests");
 })();
