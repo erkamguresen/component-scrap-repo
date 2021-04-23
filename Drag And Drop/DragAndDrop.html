@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drag and Drop</title>
+
+    //https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
+    //https://codepen.io/joezimjs/pen/yPWQbd //
+
+    <script type="text/javascript">
+      let dropArea = document.getElementById("drop-area");
+
+      //Type 1
+      //   dropArea.addEventListener("dragenter", handlerFunction, false);
+      //   dropArea.addEventListener("dragleave", handlerFunction, false);
+      //   dropArea.addEventListener("dragover", handlerFunction, false);
+      //   dropArea.addEventListener("drop", handlerFunction, false);
+
+      // Type 2
+      // ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+      //   dropArea.addEventListener(eventName, preventDefaults, false);
+      // });
+
+      // function preventDefaults(e) {
+      //   e.preventDefault();
+      //   e.stopPropagation();
+      // }
+
+      //type 3
+
+      ["dragenter", "dragover"].forEach((eventName) => {
+        dropArea.addEventListener(eventName, highlight, false);
+      });
+      ["dragleave", "drop"].forEach((eventName) => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+      });
+
+      function highlight(e) {
+        dropArea.classList.add("highlight");
+      }
+
+      function unhighlight(e) {
+        dropArea.classList.remove("highlight");
+      }
+
+      // Type 4
+      dropArea.addEventListener("drop", handleDrop, false);
+
+      function handleDrop(e) {
+        let dt = e.dataTransfer;
+        let files = dt.files;
+
+        handleFiles(files);
+      }
+
+      //without previewFile
+      // function handleFiles(files) {
+      //   [...files].forEach(uploadFile);
+      // }
+
+      function uploadFile(file) {
+        let url = "YOUR URL HERE";
+        let formData = new FormData();
+
+        formData.append("file", file);
+
+        fetch(url, {
+          method: "POST",
+          body: formData,
+        })
+          .then(() => {
+            /* Done. Inform the user */
+          })
+          .catch(() => {
+            /* Error. Inform the user */
+          });
+      }
+
+      function uploadFile(file) {
+        var url = "YOUR URL HERE";
+        var xhr = new XMLHttpRequest();
+        var formData = new FormData();
+        xhr.open("POST", url, true);
+
+        xhr.addEventListener("readystatechange", function (e) {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            // Done. Inform the user
+          } else if (xhr.readyState == 4 && xhr.status != 200) {
+            // Error. Inform the user
+          }
+        });
+
+        formData.append("file", file);
+        xhr.send(formData);
+      }
+
+      function previewFile(file) {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = function () {
+          let img = document.createElement("img");
+          img.src = reader.result;
+          document.getElementById("gallery").appendChild(img);
+        };
+      }
+
+      //with previewFile
+      function handleFiles(files) {
+        files = [...files];
+        files.forEach(uploadFile);
+        files.forEach(previewFile);
+      }
+    </script>
+    <style>
+      #drop_zone {
+        border: 5px solid blue;
+        width: 200px;
+        height: 100px;
+      }
+      #drop-area {
+        border: 2px dashed #ccc;
+        border-radius: 20px;
+        width: 480px;
+        font-family: sans-serif;
+        margin: 100px auto;
+        padding: 20px;
+      }
+      #drop-area.highlight {
+        border-color: purple;
+      }
+      p {
+        margin-top: 0;
+      }
+      .my-form {
+        margin-bottom: 10px;
+      }
+      #gallery {
+        margin-top: 10px;
+      }
+      #gallery img {
+        width: 150px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+      .button {
+        display: inline-block;
+        padding: 10px;
+        background: #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      .button:hover {
+        background: #ddd;
+      }
+      #fileElem {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="drop_zone" ondrop="dropHandler(event);">
+      <p>Drag one or more files to this Drop Zone ...</p>
+    </div>
+    <div id="drop-area">
+      <form class="my-form">
+        <p>
+          Upload multiple files with the file dialog or by dragging and dropping
+          images onto the dashed region
+        </p>
+        <input
+          type="file"
+          id="fileElem"
+          multiple
+          accept="image/*"
+          onchange="handleFiles(this.files)"
+        />
+        <label class="button" for="fileElem">Select some files</label>
+      </form>
+      <div id="gallery"></div>
+    </div>
+  </body>
+</html>
