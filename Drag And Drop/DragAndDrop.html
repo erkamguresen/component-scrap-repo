@@ -7,7 +7,7 @@
     <title>Drag and Drop</title>
 
     //https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
-    //https://codepen.io/joezimjs/pen/yPWQbd //
+    //https://codepen.io/joezimjs/pen/yPWQbd
 
     <script type="text/javascript">
       let dropArea = document.getElementById("drop-area");
@@ -18,15 +18,14 @@
       //   dropArea.addEventListener("dragover", handlerFunction, false);
       //   dropArea.addEventListener("drop", handlerFunction, false);
 
-      // Type 2
-      // ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
-      //   dropArea.addEventListener(eventName, preventDefaults, false);
-      // });
+      ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+      });
 
-      // function preventDefaults(e) {
-      //   e.preventDefault();
-      //   e.stopPropagation();
-      // }
+      function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
 
       //type 3
 
