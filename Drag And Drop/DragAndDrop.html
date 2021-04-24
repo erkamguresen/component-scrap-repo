@@ -128,21 +128,21 @@
       [...files].forEach(uploadFile);
     }
 
-    function readFile(input) {
-      let file = input.files[0];
+    // function readFile(input) {
+    //   let file = input.files[0];
 
-      let reader = new FileReader();
+    //   let reader = new FileReader();
 
-      reader.readAsText(file);
+    //   reader.readAsText(file);
 
-      reader.onload = function () {
-        console.log(reader.result);
-      };
+    //   reader.onload = function () {
+    //     console.log(reader.result);
+    //   };
 
-      reader.onerror = function () {
-        console.log(reader.error);
-      };
-    }
+    //   reader.onerror = function () {
+    //     console.log(reader.error);
+    //   };
+    // }
 
     function uploadFile(file) {
       let textFromFile = "";
@@ -150,19 +150,24 @@
       let reader = new FileReader();
 
       reader.readAsText(file);
-
+      //async problem code executes while file loading so when the console tries
+      //to log the text from file it was not completed yet
+      //Thus write into onload function
+      console.log("hi 1");
       reader.onload = function () {
-        console.log(reader.result);
+        textFromFile = reader.result;
+        console.log(typeof reader.result, reader.result);
+        console.log(textFromFile);
+        let paragraph = document.getElementById("textFromFiles");
+
+        paragraph.textContent = textFromFile;
       };
 
       reader.onerror = function () {
         console.log(reader.error);
       };
 
-      let paragraph = document.getElementById("textFromFiles");
-
-      paragraph.innerHTML = textFromFile;
-
+      console.log("hi 2");
       // let url = "YOUR URL HERE";
       // let formData = new FormData();
 
