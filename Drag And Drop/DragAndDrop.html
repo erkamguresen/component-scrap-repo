@@ -10,13 +10,13 @@
       let dropArea = document.getElementById("drop-area");
 
       //Type 1
-      //   dropArea.addEventListener("dragenter", handlerFunction, false);
-      //   dropArea.addEventListener("dragleave", handlerFunction, false);
-      //   dropArea.addEventListener("dragover", handlerFunction, false);
-      //   dropArea.addEventListener("drop", handlerFunction, false);
+      // dropArea.addEventListener("dragenter", handlerFunction, false);
+      // dropArea.addEventListener("dragleave", handlerFunction, false);
+      // dropArea.addEventListener("dragover", handlerFunction, false);
+      // dropArea.addEventListener("drop", handlerFunction, false);
 
       ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
-        dropArea.addEventListener(eventName, preventDefaults, false);
+        dropArea.addEventListener(eventName, preventDefaults);
       });
 
       function preventDefaults(e) {
@@ -25,10 +25,10 @@
       }
 
       ["dragenter", "dragover"].forEach((eventName) => {
-        dropArea.addEventListener(eventName, highlight, false);
+        dropArea.addEventListener(eventName, highlight);
       });
       ["dragleave", "drop"].forEach((eventName) => {
-        dropArea.addEventListener(eventName, unhighlight, false);
+        dropArea.addEventListener(eventName, unhighlight);
       });
 
       function highlight(e) {
@@ -39,7 +39,7 @@
         dropArea.classList.remove("highlight");
       }
 
-      dropArea.addEventListener("drop", handleDrop, false);
+      dropArea.addEventListener("drop", handleDrop);
 
       function handleDrop(e) {
         let dt = e.dataTransfer;
@@ -49,13 +49,40 @@
       }
 
       //without previewFile
-      // function handleFiles(files) {
-      //   [...files].forEach(uploadFile);
-      // }
+      function handleFiles(files) {
+        [...files].forEach(uploadFile);
+      }
+
+      function readFile(input) {
+        let file = input.files[0];
+
+        let reader = new FileReader();
+
+        reader.readAsText(file);
+
+        reader.onload = function () {
+          console.log(reader.result);
+        };
+
+        reader.onerror = function () {
+          console.log(reader.error);
+        };
+      }
 
       function uploadFile(file) {
+        let textFromFile = "";
+
         let reader = new FileReader();
-        let textFromFile = reader.readAsText(file);
+
+        reader.readAsText(file);
+
+        reader.onload = function () {
+          console.log(reader.result);
+        };
+
+        reader.onerror = function () {
+          console.log(reader.error);
+        };
 
         let paragraph = document.getElementById("textFromFiles");
 
@@ -77,44 +104,43 @@
         //     /* Error. Inform the user */
         //   });
       }
-      /*
-      function uploadFile(file) {
-        var url = "YOUR URL HERE";
-        var xhr = new XMLHttpRequest();
-        var formData = new FormData();
-        xhr.open("POST", url, true);
 
-        xhr.addEventListener("readystatechange", function (e) {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            // Done. Inform the user
-          } else if (xhr.readyState == 4 && xhr.status != 200) {
-            // Error. Inform the user
-          }
-        });
+      // function uploadFile(file) {
+      //   var url = "YOUR URL HERE";
+      //   var xhr = new XMLHttpRequest();
+      //   var formData = new FormData();
+      //   xhr.open("POST", url, true);
 
-        formData.append("file", file);
-        xhr.send(formData);
-      }
-      */
+      //   xhr.addEventListener("readystatechange", function (e) {
+      //     if (xhr.readyState == 4 && xhr.status == 200) {
+      //       // Done. Inform the user
+      //     } else if (xhr.readyState == 4 && xhr.status != 200) {
+      //       // Error. Inform the user
+      //     }
+      //   });
 
-      function previewFile(file) {
-        let reader = new FileReader();
-        reader.readAsDataURL(file);
-        // reader.onloadend = callFunction(reader.readAsText); //so I should use stg like this
+      //   formData.append("file", file);
+      //   xhr.send(formData);
+      // }
 
-        reader.onloadend = function () {
-          let img = document.createElement("img");
-          img.src = reader.result;
-          document.getElementById("gallery").appendChild(img);
-        };
-      }
+      // function previewFile(file) {
+      //   let reader = new FileReader();
+      //   reader.readAsDataURL(file);
+      //   reader.onloadend = callFunction(reader.readAsText); //so I should use stg like this
+
+      //   reader.onloadend = function () {
+      //     let img = document.createElement("img");
+      //     img.src = reader.result;
+      //     document.getElementById("gallery").appendChild(img);
+      //   };
+      // }
 
       //with previewFile
-      function handleFiles(files) {
-        files = [...files];
-        files.forEach(uploadFile);
-        files.forEach(previewFile);
-      }
+      // function handleFiles(files) {
+      //   files = [...files];
+      //   files.forEach(uploadFile);
+      //   files.forEach(previewFile);
+      // }
     </script>
     <style>
       /* first one */
