@@ -6,142 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Drag and Drop</title>
 
-    <script type="text/javascript">
-      let dropArea = document.getElementById("drop-area");
-
-      //Type 1
-      // dropArea.addEventListener("dragenter", handlerFunction, false);
-      // dropArea.addEventListener("dragleave", handlerFunction, false);
-      // dropArea.addEventListener("dragover", handlerFunction, false);
-      // dropArea.addEventListener("drop", handlerFunction, false);
-
-      ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
-        dropArea.addEventListener(eventName, preventDefaults);
-      });
-
-      function preventDefaults(e) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-
-      ["dragenter", "dragover"].forEach((eventName) => {
-        dropArea.addEventListener(eventName, highlight);
-      });
-      ["dragleave", "drop"].forEach((eventName) => {
-        dropArea.addEventListener(eventName, unhighlight);
-      });
-
-      function highlight(e) {
-        dropArea.classList.add("highlight");
-      }
-
-      function unhighlight(e) {
-        dropArea.classList.remove("highlight");
-      }
-
-      dropArea.addEventListener("drop", handleDrop);
-
-      function handleDrop(e) {
-        let dt = e.dataTransfer;
-        let files = dt.files;
-
-        handleFiles(files);
-      }
-
-      //without previewFile
-      function handleFiles(files) {
-        [...files].forEach(uploadFile);
-      }
-
-      function readFile(input) {
-        let file = input.files[0];
-
-        let reader = new FileReader();
-
-        reader.readAsText(file);
-
-        reader.onload = function () {
-          console.log(reader.result);
-        };
-
-        reader.onerror = function () {
-          console.log(reader.error);
-        };
-      }
-
-      function uploadFile(file) {
-        let textFromFile = "";
-
-        let reader = new FileReader();
-
-        reader.readAsText(file);
-
-        reader.onload = function () {
-          console.log(reader.result);
-        };
-
-        reader.onerror = function () {
-          console.log(reader.error);
-        };
-
-        let paragraph = document.getElementById("textFromFiles");
-
-        paragraph.innerHTML = textFromFile;
-
-        // let url = "YOUR URL HERE";
-        // let formData = new FormData();
-
-        // formData.append("file", file);
-
-        // fetch(url, {
-        //   method: "POST",
-        //   body: formData,
-        // })
-        //   .then(() => {
-        //     /* Done. Inform the user */
-        //   })
-        //   .catch(() => {
-        //     /* Error. Inform the user */
-        //   });
-      }
-
-      // function uploadFile(file) {
-      //   var url = "YOUR URL HERE";
-      //   var xhr = new XMLHttpRequest();
-      //   var formData = new FormData();
-      //   xhr.open("POST", url, true);
-
-      //   xhr.addEventListener("readystatechange", function (e) {
-      //     if (xhr.readyState == 4 && xhr.status == 200) {
-      //       // Done. Inform the user
-      //     } else if (xhr.readyState == 4 && xhr.status != 200) {
-      //       // Error. Inform the user
-      //     }
-      //   });
-
-      //   formData.append("file", file);
-      //   xhr.send(formData);
-      // }
-
-      // function previewFile(file) {
-      //   let reader = new FileReader();
-      //   reader.readAsDataURL(file);
-      //   reader.onloadend = callFunction(reader.readAsText); //so I should use stg like this
-
-      //   reader.onloadend = function () {
-      //     let img = document.createElement("img");
-      //     img.src = reader.result;
-      //     document.getElementById("gallery").appendChild(img);
-      //   };
-      // }
-
-      //with previewFile
-      // function handleFiles(files) {
-      //   files = [...files];
-      //   files.forEach(uploadFile);
-      //   files.forEach(previewFile);
-      // }
-    </script>
     <style>
       /* first one */
       #drop_zone {
@@ -217,4 +81,140 @@
     </div>
     <div><p id="textFromFiles">Text goes here</p></div>
   </body>
+  <script type="text/javascript">
+    let dropArea = document.getElementById("drop-area");
+
+    //Type 1
+    // dropArea.addEventListener("dragenter", handlerFunction, false);
+    // dropArea.addEventListener("dragleave", handlerFunction, false);
+    // dropArea.addEventListener("dragover", handlerFunction, false);
+    // dropArea.addEventListener("drop", handlerFunction, false);
+
+    ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
+      dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    ["dragenter", "dragover"].forEach((eventName) => {
+      dropArea.addEventListener(eventName, highlight);
+    });
+    ["dragleave", "drop"].forEach((eventName) => {
+      dropArea.addEventListener(eventName, unhighlight);
+    });
+
+    function highlight(e) {
+      dropArea.classList.add("highlight");
+    }
+
+    function unhighlight(e) {
+      dropArea.classList.remove("highlight");
+    }
+
+    dropArea.addEventListener("drop", handleDrop);
+
+    function handleDrop(e) {
+      let dt = e.dataTransfer;
+      let files = dt.files;
+
+      handleFiles(files);
+    }
+
+    //without previewFile
+    function handleFiles(files) {
+      [...files].forEach(uploadFile);
+    }
+
+    function readFile(input) {
+      let file = input.files[0];
+
+      let reader = new FileReader();
+
+      reader.readAsText(file);
+
+      reader.onload = function () {
+        console.log(reader.result);
+      };
+
+      reader.onerror = function () {
+        console.log(reader.error);
+      };
+    }
+
+    function uploadFile(file) {
+      let textFromFile = "";
+
+      let reader = new FileReader();
+
+      reader.readAsText(file);
+
+      reader.onload = function () {
+        console.log(reader.result);
+      };
+
+      reader.onerror = function () {
+        console.log(reader.error);
+      };
+
+      let paragraph = document.getElementById("textFromFiles");
+
+      paragraph.innerHTML = textFromFile;
+
+      // let url = "YOUR URL HERE";
+      // let formData = new FormData();
+
+      // formData.append("file", file);
+
+      // fetch(url, {
+      //   method: "POST",
+      //   body: formData,
+      // })
+      //   .then(() => {
+      //     /* Done. Inform the user */
+      //   })
+      //   .catch(() => {
+      //     /* Error. Inform the user */
+      //   });
+    }
+
+    // function uploadFile(file) {
+    //   var url = "YOUR URL HERE";
+    //   var xhr = new XMLHttpRequest();
+    //   var formData = new FormData();
+    //   xhr.open("POST", url, true);
+
+    //   xhr.addEventListener("readystatechange", function (e) {
+    //     if (xhr.readyState == 4 && xhr.status == 200) {
+    //       // Done. Inform the user
+    //     } else if (xhr.readyState == 4 && xhr.status != 200) {
+    //       // Error. Inform the user
+    //     }
+    //   });
+
+    //   formData.append("file", file);
+    //   xhr.send(formData);
+    // }
+
+    // function previewFile(file) {
+    //   let reader = new FileReader();
+    //   reader.readAsDataURL(file);
+    //   reader.onloadend = callFunction(reader.readAsText); //so I should use stg like this
+
+    //   reader.onloadend = function () {
+    //     let img = document.createElement("img");
+    //     img.src = reader.result;
+    //     document.getElementById("gallery").appendChild(img);
+    //   };
+    // }
+
+    //with previewFile
+    // function handleFiles(files) {
+    //   files = [...files];
+    //   files.forEach(uploadFile);
+    //   files.forEach(previewFile);
+    // }
+  </script>
 </html>
