@@ -1,3 +1,9 @@
+/**
+ *
+ * @param {array} actual actual array to compare
+ * @param {array} expected expected array to compare
+ * @returns {boolean} true if arrays contains same values
+ */
 const deepCompareArrays = (actual, expect) => {
   // are they the same thing?
   return (
