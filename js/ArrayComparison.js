@@ -1,4 +1,5 @@
 /**
+ * This method compares two given arrays with respect to their lengths and values.
  *
  * @param {array} actual actual array to compare
  * @param {array} expected expected array to compare
