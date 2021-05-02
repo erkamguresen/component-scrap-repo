@@ -36,19 +36,22 @@ function addItem(e) {
   newLi.appendChild(deleteButton);
 
   itemList.appendChild(newLi);
+
+  //delete the text from the formatting
+  newItem.value = "";
 }
 
 function removeItem(e) {
   if (e.target.classList.contains("delete")) {
-    let parentNode = e.target.parentElement;
+    let currentLi = e.target.parentElement;
 
     //there is formatting and extra X so use first child which is the only tex node :-)
-    let text = parentNode.firstChild.textContent.trim();
+    let text = currentLi.firstChild.textContent.trim();
 
     let isConfirmed = confirm(`Are you sure you want to delete:    ${text} ?`);
 
     if (isConfirmed) {
-      //TODO: 13.27
+      itemList.removeChild(currentLi);
     }
   }
 }
