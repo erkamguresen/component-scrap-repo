@@ -2,11 +2,16 @@ let form = document.getElementById("addForm");
 
 let itemList = document.getElementById("items");
 
+let filter = document.getElementById("filter");
+
 //Form Submit Event
 form.addEventListener("submit", addItem);
 
 //delete event
 itemList.addEventListener("click", removeItem);
+
+//filter&search event (use input not keyup for smooth delete and write)
+filter.addEventListener("input", filterItems);
 
 //Add Item
 function addItem(e) {
@@ -54,4 +59,23 @@ function removeItem(e) {
       itemList.removeChild(currentLi);
     }
   }
+}
+
+function filterItems(e) {
+  //get the search text and convert to lowercase
+  let searchText = e.target.value.toLocaleLowerCase();
+
+  let items = itemList.getElementsByTagName("li");
+
+  //convert to an array
+  Array.from(items).forEach((item) => {
+    let itemName = item.firstChild.textContent;
+
+    //If the searched text is not in the array it will return -1
+    if (itemName.toLocaleLowerCase().indexOf(searchText) === -1) {
+      item.style.display = "none";
+    } else {
+      item.style.display = "block";
+    }
+  });
 }
