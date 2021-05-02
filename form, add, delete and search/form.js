@@ -42,10 +42,10 @@ function removeItem(e) {
   if (e.target.classList.contains("delete")) {
     let parentNode = e.target.parentElement;
 
-    let isConfirmed = confirm(
-      //TODO: there is formatting and extra X
-      "Are you sure you want to delete " + parentNode.textContent + " ?"
-    );
+    //there is formatting and extra X so use first child which is the only tex node :-)
+    let text = parentNode.firstChild.textContent.trim();
+
+    let isConfirmed = confirm(`Are you sure you want to delete:    ${text} ?`);
 
     if (isConfirmed) {
       //TODO: 13.27
