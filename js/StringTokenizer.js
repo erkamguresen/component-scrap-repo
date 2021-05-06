@@ -5,6 +5,9 @@ function stringTokenizer(textToTokenize) {
 
   returnArray.push(getLineTokens(textToTokenize));
 
+  //TODO: watch maybe this one will work properly when
+  // let loopLength = returnArray.length;
+  // for (let i = 0; i < returnArray.length; i++) {
   for (let i = 0; i < returnArray.length; i++) {
     returnArray.push(getWordTokens(returnArray.shift()));
   }
