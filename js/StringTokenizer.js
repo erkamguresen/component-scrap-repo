@@ -22,19 +22,26 @@ function getLineTokens(textToTokenize) {
   for (let i = 0; i < textToTokenize.length; i++) {
     let char = textToTokenize[i];
 
+    // console.log(char !== "\n" && char !== "\r");
+
     if (i === textToTokenize.length - 1) {
-      line += char;
-      returnArray.push(line);
+      if (char !== "\n" && char !== "\r") {
+        line += char;
+      }
+
+      if (line !== "") returnArray.push(line);
+
       break;
     }
 
-    if (char !== "\n") {
+    if (char !== "\n" && char !== "\r") {
       line += char;
       continue;
     } else {
-      // char === "\n"
-      returnArray.push(line);
+      // char === "\n" || char === "\r"
+      if (line !== "") returnArray.push(line);
 
+      //reset line variable
       line = "";
     }
   }
@@ -47,13 +54,16 @@ function getWordTokens(textLineToTokenize) {
   let returnArray = [];
   let word = "";
 
+  //remove white spaces in the line
+  textLineToTokenize = textLineToTokenize.trim();
+
   for (let i = 0; i < textLineToTokenize.length; i++) {
     let char = textLineToTokenize[i];
 
     if (i === textLineToTokenize.length - 1) {
       if (char !== " " && char !== "" && char !== "\n") word += char;
 
-      returnArray.push(word);
+      if (word !== "") returnArray.push(word);
 
       break;
     }
