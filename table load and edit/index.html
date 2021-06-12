@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../Drag And Drop/DragAndDrop.css" />
+    <link rel="stylesheet" href="./tableDrop.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- File Upload Part -->
+    <div id="drop-area">
+      <form class="my-form">
+        <p id="drag-text">
+          Upload multiple files with the file dialog or by dragging and dropping
+          images onto the dashed region
+        </p>
+
+        <!-- TODO: limit files to txt and json
+        https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept -->
+
+        <input type="file" id="fileElem" multiple />
+
+        <label class="btn default" for="fileElem">
+          Select files to memorize
+        </label>
+      </form>
+      <div id="gallery"></div>
+    </div>
+
+    <p id="xportxlsx" class="xport">
+      <input type="submit" value="Export to XLSX!" onclick="doit('xlsx');" />
+    </p>
+
+    <div id="data-table"></div>
+
+    <script
+      lang="javascript"
+      src="//unpkg.com/xlsx/dist/xlsx.full.min.js"
+    ></script>
+    <script src="src/init/index.js" type="module"></script>
+    <script>
+      function doit(type, fn, dl) {
+        var elt = document.getElementById('data-table');
+        var wb = XLSX.utils.table_to_book(elt, { sheet: 'Sheet JS' });
+        return dl
+          ? XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' })
+          : XLSX.writeFile(wb, fn || 'MemorizeDataTable.' + (type || 'xlsx'));
+      }
+    </script>
+  </body>
+</html>
