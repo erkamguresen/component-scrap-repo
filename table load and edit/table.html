@@ -11,32 +11,50 @@
     <table class="content-table">
       <thead>
         <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Points</th>
-          <th>Team</th>
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>1</td>
+          <th>1</th>
           <td contenteditable="true">Domenic</td>
-          <td>88,110</td>
-          <td>dcode</td>
+          <td contenteditable="true">88,110</td>
+          <td contenteditable="true">dcode</td>
         </tr>
         <tr class="active-row">
-          <td>2</td>
+          <th>2</th>
           <td>Sally</td>
           <td>72,400</td>
           <td>Students</td>
         </tr>
         <tr>
-          <td>3</td>
+          <th>3</th>
           <td>Nick</td>
           <td>52,300</td>
           <td>dcode</td>
         </tr>
       </tbody>
     </table>
+
+    <script>
+      document
+        .querySelector('.content-table')
+        .addEventListener('dblclick', addEdit);
+
+      function addEdit(event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        const element = event.target;
+
+        // element.contenteditable = true;
+        element.setAttribute('contenteditable', true);
+        element.click;
+        console.log(element);
+      }
+    </script>
   </body>
 </html>

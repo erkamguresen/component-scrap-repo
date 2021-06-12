@@ -15,6 +15,8 @@ export function uploadFile(file) {
     var sheet = workbook.Sheets[sheetName];
     document.getElementById('data-table').innerHTML =
       XLSX.utils.sheet_to_html(sheet);
+
+    console.log(sheet);
   };
 
   reader.readAsArrayBuffer(file);
